@@ -1,0 +1,31 @@
+---
+title: "Shapefile list"
+output: pdf_document
+---
+
+```{r setup, echo = FALSE, message=FALSE, comment=NA}
+# Set WD
+
+setwd("N:/PROGRAMMES new/GIZ DRC 2017 - Maniema Mapping and LUP/Activities/Products/2019-01 Data_field_jan")
+
+# Check the wd
+getwd()
+
+# Clean the environment
+#rm(list = ls())
+
+dir_list <- list.dirs('.')
+
+#for (i in dir_list){
+#  if (grepl("*shp$", i)){
+#    print(i)
+#    cat("\n")
+#    a <- list.files(path = i, pattern = "\\.shp$", recursive = TRUE)
+#    print(a)
+#    cat("\n")
+#  }
+#} 
+
+
+```
+
