@@ -1,30 +1,55 @@
 #####################################################
 #              File lister from shapefile           #
 #                                                   #  
-#                November 22th 2018                 #
+#                February 16th 2019                 #
 #                 Marco Pizzolato                   #
 #####################################################
 
+###  SHORT DESCRIPTION ----
+
+# The script loops through the shapefile in a folder and creates a report.
 
 
-# Set WD
+###  SET THESE PARAMETERS ----
 
-setwd("N:/PROGRAMMES new/GIZ DRC 2017 - Maniema Mapping and LUP/Activities/Products/Marco_Data_processing/5_Data_jan2019_field")
+# which file extension do you want to find
+extension <- as.character("shp") # specify here the extension
+
+# folder you want to scan (the scrip scans also the sub-folders)
+path_dest <- ("D:/Desktop/SSD_GIS/Flood_Map")
+
+
+###  SCRIPT ----
+
+# Set WD automatically
+setwd(dirname(rstudioapi::getSourceEditorContext()$path))
 
 # Check the wd
 getwd()
 
 # Clean the environment
-rm(list = ls())
+# rm(list = ls())
 
-list.files(path = ".", pattern = "\\.shp$", recursive = TRUE)
 
-dir_list <- list.dirs('.')
+list.files(path = path_dest, pattern = (paste("\\.",extension,"$", sep="")), recursive = TRUE)
+
+
+dir_list <- list.dirs(path_dest)
+dir_list
 
 for (i in dir_list){
-  if (grepl("*shp$", i)){
-    a <- list.files(path = i, pattern = "\\.shp$", recursive = TRUE)
-    print(i)
-    print(a)
-  }
-} 
+    a <- list.files(path = i, pattern = "\\.shp$")
+    if (length(a) > 0){
+      print("FOLDER:")
+      print(i)
+      print("FILES:")
+      print(a)
+    } 
+  } 
+
+###  PRINT THE PDF ----
+
+rmarkdown::render( input = "./file_lister.Rmd",
+                   output_format = "pdf_document",
+                   output_file = paste("List_of_",extension,"_files",".pdf", sep = ""),
+                   output_dir = path_dest) 
