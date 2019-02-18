@@ -1,34 +1,37 @@
 #####################################################
-#              File lister from shapefile           #
+#                    File lister                    #
 #                                                   #  
-#                February 16th 2019                 #
+#                  February 2019                    #
 #                 Marco Pizzolato                   #
 #####################################################
 
-###  SHORT DESCRIPTION ----
+####  SHORT DESCRIPTION ----
 
-# The script loops through the shapefile in a folder and creates a report.
+# Given a specific folder path the script loops through the folder and subfolders
+# looking for all the files with a specific extension.
+# Otputs: (1) Quick summary on the console (2) .pdf report in the target folder.
 
 # Clean the environment if you need to do so
-
 # rm(list = ls())
 
+#### LIBRARIES ----
 
-library(knitr) # create table in Rmd file
-library(stringr)
+library(knitr) # creates table in Rmd file
+library(stringr) # use to cut the string with a pattern
 
-###  SET THESE PARAMETERS ----
 
-# Write here the EXTENSION you want to find
-EXTENSION <- ("shp")
+####  SET THESE PARAMETERS ----
 
-# folder you want to scan (the scrip scans also the sub-folders)
-PATH_DEST <- ("N:/PROGRAMMES new/GIZ DRC 2017 - Maniema Mapping and LUP/Activities/Products/2019-01 Data_field_jan/Village_Bafundo_PAT")
+# EXTENSION you want to find
+EXTENSION <- ("pdf") # replace ".shp" with the extension you want (es: .pdf,.jpg)
+
+# Target FOLDER
+PATH_DEST <- ("D:/Desktop/../..") # Replace with the folder you want to scan (the scrip scans also the sub-folders)
   
 
-###  SCRIPT ----
+####  SCRIPT ----
 
-# Set WD automatically
+# Set WD automatically to where the R scrip is
 setwd(dirname(rstudioapi::getSourceEditorContext()$path))
 
 # Check the wd
@@ -37,35 +40,31 @@ getwd()
 
 extension <- as.character(EXTENSION)
 
-list.files(path = PATH_DEST, pattern = (paste("\\.",extension,"$", sep="")), recursive = TRUE)
+# Complete list of files (if you want to see it) 
+# list.files(path = PATH_DEST, pattern = (paste("\\.",extension,"$", sep="")), recursive = TRUE)
 
-
+# Complete list of directories and subdirectories 
 dir_list <- list.dirs(PATH_DEST)
-dir_list
 
-df1 <- data.frame(stringsAsFactors=FALSE)
-list_a <- list()
+# (if you want to see it)
+# dir_list
 
-for (i in dir_list){
-  a <- list.files(path = i, pattern = "\\.shp$")
-  if (length(a) > 0){
-    df1[1,1] <- i
-    list_a <- a
-  } 
-} 
 
+####  RUN FOR A QUICK RESULT IN THE CONSOLE ----
 
 for (i in dir_list){
-    a <- list.files(path = i, pattern = "\\.shp$")
+    a <- list.files(path = i, pattern = (paste("\\.",extension,"$", sep="")))
     if (length(a) > 0){
       print("FOLDER:")
-      print(i)
+      folder <- str_remove(i,PATH_DEST)
+      print(folder)
       print("FILES:")
       print(a)
+      cat("\n")
     } 
   } 
 
-###  PRINT THE PDF ----
+###  RUN TO PRINT THE PDF REPORT ----
 
 path_print <- as.data.frame(PATH_DEST)
 

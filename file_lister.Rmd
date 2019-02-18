@@ -13,12 +13,17 @@ kable(path_print, format = "pandoc", padding = 8,col.names =c(""), caption = "So
 ### Folders containing the files with the extension of interest
 ```{r, echo = FALSE, message=FALSE, comment=NA}
 for (i in dir_list){
-    a <- list.files(path = i, pattern = "\\.shp$")
+    a <- list.files(path = i, pattern = (paste("\\.",extension,"$", sep="")))
     if (length(a) > 0){
-      path2_print <- as.data.frame(i,PATH_DEST)
-      kable(path2_print, format = "pandoc", padding = 6,col.names =c(""), caption = "none")
+      path2_print <- str_remove(i,PATH_DEST)
+      print(paste("FOLDER: ",path2_print))
+      cat("\n")
       print(a)
+      cat("\n")
+      cat("\n")
     } 
-  } 
+} 
+
+
 ```
 
