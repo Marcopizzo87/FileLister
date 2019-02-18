@@ -9,15 +9,22 @@
 
 # The script loops through the shapefile in a folder and creates a report.
 
+# Clean the environment if you need to do so
+
+# rm(list = ls())
+
+
+library(knitr) # create table in Rmd file
+library(stringr)
 
 ###  SET THESE PARAMETERS ----
 
-# which file extension do you want to find
-extension <- as.character("shp") # specify here the extension
+# Write here the EXTENSION you want to find
+EXTENSION <- ("shp")
 
 # folder you want to scan (the scrip scans also the sub-folders)
-path_dest <- ("D:/Desktop/SSD_GIS/Flood_Map")
-
+PATH_DEST <- ("N:/PROGRAMMES new/GIZ DRC 2017 - Maniema Mapping and LUP/Activities/Products/2019-01 Data_field_jan/Village_Bafundo_PAT")
+  
 
 ###  SCRIPT ----
 
@@ -27,15 +34,26 @@ setwd(dirname(rstudioapi::getSourceEditorContext()$path))
 # Check the wd
 getwd()
 
-# Clean the environment
-# rm(list = ls())
+
+extension <- as.character(EXTENSION)
+
+list.files(path = PATH_DEST, pattern = (paste("\\.",extension,"$", sep="")), recursive = TRUE)
 
 
-list.files(path = path_dest, pattern = (paste("\\.",extension,"$", sep="")), recursive = TRUE)
-
-
-dir_list <- list.dirs(path_dest)
+dir_list <- list.dirs(PATH_DEST)
 dir_list
+
+df1 <- data.frame(stringsAsFactors=FALSE)
+list_a <- list()
+
+for (i in dir_list){
+  a <- list.files(path = i, pattern = "\\.shp$")
+  if (length(a) > 0){
+    df1[1,1] <- i
+    list_a <- a
+  } 
+} 
+
 
 for (i in dir_list){
     a <- list.files(path = i, pattern = "\\.shp$")
@@ -49,7 +67,9 @@ for (i in dir_list){
 
 ###  PRINT THE PDF ----
 
+path_print <- as.data.frame(PATH_DEST)
+
 rmarkdown::render( input = "./file_lister.Rmd",
                    output_format = "pdf_document",
-                   output_file = paste("List_of_",extension,"_files",".pdf", sep = ""),
-                   output_dir = path_dest) 
+                   output_file = paste("List_of_",EXTENSION,"_files",".pdf", sep = ""),
+                   output_dir = PATH_DEST) 

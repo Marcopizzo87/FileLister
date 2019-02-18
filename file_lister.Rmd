@@ -1,17 +1,22 @@
 ---
-title: "Shapefile list"
+title: "File List"
 output: pdf_document
 ---
 
+### Source path:
+```{r echo = FALSE, message=FALSE, comment=NA}
 
-## Folders containing the files with the extension of interest
+kable(path_print, format = "pandoc", padding = 8,col.names =c(""), caption = "Source folder path:")
+```
+
+
+### Folders containing the files with the extension of interest
 ```{r, echo = FALSE, message=FALSE, comment=NA}
 for (i in dir_list){
     a <- list.files(path = i, pattern = "\\.shp$")
     if (length(a) > 0){
-      print("FOLDER:")
-      print(i)
-      print("FILES:")
+      path2_print <- as.data.frame(i,PATH_DEST)
+      kable(path2_print, format = "pandoc", padding = 6,col.names =c(""), caption = "none")
       print(a)
     } 
   } 
