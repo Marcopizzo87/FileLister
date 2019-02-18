@@ -6,7 +6,7 @@ This script loops through the target folder and subfolders looking for all the f
 
 > **INPUT**
 > - file extension (.pfd,.shp,etc.)
-> - Target folder (absolute path)
+> - target folder (absolute path)
 >
 > **OUTPUT**
 > - list of files with the extension of interest
