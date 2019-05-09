@@ -52,17 +52,20 @@ dir_list <- list.dirs(PATH_DEST)
 
 ####  RUN FOR A QUICK RESULT IN THE CONSOLE ----
 
+
 for (i in dir_list){
-    a <- list.files(path = i, pattern = (paste("\\.",extension,"$", sep="")))
-    if (length(a) > 0){
-      print("FOLDER:")
-      folder <- str_remove(i,PATH_DEST)
-      print(folder)
-      print("FILES:")
-      print(a)
-      cat("\n")
-    } 
+  a <- list.files(path = i, pattern = (paste("\\.",extension,"$", sep="")))
+  if (length(a) > 0){
+    print("FOLDER:")
+    folder <- str_remove(i,PATH_DEST)
+    print(folder)
+    print("FILES:")
+    print(a)
+    cat("\n")
   } 
+} 
+
+
 
 ###  RUN TO PRINT THE PDF REPORT ----
 
@@ -72,3 +75,24 @@ rmarkdown::render( input = "./file_lister.Rmd",
                    output_format = "pdf_document",
                    output_file = paste("List_of_",EXTENSION,"_files",".pdf", sep = ""),
                    output_dir = PATH_DEST) 
+
+
+
+###  RUN TO EXPORT THE LIST OF FILES IN EXCEL ----
+
+
+list_a <- list()
+
+for (i in dir_list){
+  a <- list.files(path = i) #, pattern = (paste("\\.",extension,"$", sep="")))
+  if (length(a) > 0){
+    #df1[1,1] <- i
+    list_a <- append(list_a,a)
+  } 
+} 
+
+df.list_a <- as.data.frame(list_a) %>% gather(.)
+
+write.csv(df.list_a, file = paste("List_of_all files",".csv", sep = ""))
+
+## END OF SCRIPT ##
