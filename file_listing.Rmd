@@ -1,0 +1,29 @@
+---
+title: "File List"
+output: pdf_document
+---
+
+### Source path:
+```{r echo = FALSE, message=FALSE, comment=NA}
+
+kable(path_print, format = "pandoc", padding = 8,col.names =c(""), caption = "Source folder path:")
+```
+
+
+### Folders containing the files with the extension of interest
+```{r, echo = FALSE, message=FALSE, comment=NA}
+for (i in dir_list){
+    a <- list.files(path = i, pattern = (paste("\\.",extension,"$", sep="")))
+    if (length(a) > 0){
+      path2_print <- str_remove(i,PATH_DEST)
+      print(paste("FOLDER: ",path2_print))
+      cat("\n")
+      print(a)
+      cat("\n")
+      cat("\n")
+    } 
+} 
+
+
+```
+
