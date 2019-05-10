@@ -1,15 +1,16 @@
-#####################################################
-#                    File lister                    #
-#                                                   #  
-#                  February 2019                    #
-#                 Marco Pizzolato                   #
-#####################################################
+
+####-->  FILE LISTING
+####-->  List al the files in a folder & subfolders
+####-->  February 2019                    
+####-->  by Marco Pizzolato                   
+
 
 ####  SHORT DESCRIPTION ----
 
-# Given a specific folder path the script loops through the folder and subfolders
-# looking for all the files with a specific extension.
-# Otputs: (1) Quick summary on the console (2) .pdf report in the target folder.
+# Given a specific folder path and file extension the script loops through 
+# the folder (including subfolders) looking for all files with a specific extension.
+# Inputs: (1) Path to the folder to scan (2) Extension to search.
+# Outputs: (1) .pdf report in the target folder (2) .csv report in the target folder.
 
 # Clean the environment if you need to do so
 # rm(list = ls())
@@ -37,7 +38,6 @@ setwd(dirname(rstudioapi::getSourceEditorContext()$path))
 # Check the wd
 getwd()
 
-
 extension <- as.character(EXTENSION)
 
 # Complete list of files (if you want to see it) 
@@ -52,7 +52,6 @@ dir_list <- list.dirs(PATH_DEST)
 
 ####  RUN FOR A QUICK RESULT IN THE CONSOLE ----
 
-
 for (i in dir_list){
   a <- list.files(path = i, pattern = (paste("\\.",extension,"$", sep="")))
   if (length(a) > 0){
@@ -64,7 +63,6 @@ for (i in dir_list){
     cat("\n")
   } 
 } 
-
 
 
 ###  RUN TO PRINT THE PDF REPORT ----
@@ -79,7 +77,6 @@ rmarkdown::render( input = "./file_lister.Rmd",
 
 
 ###  RUN TO EXPORT THE LIST OF FILES IN EXCEL ----
-
 
 list_a <- list()
 
